@@ -10,7 +10,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
-class Request implements RequestInterface, RequestMethodInterface
+final class Request implements RequestInterface, RequestMethodInterface
 {
     use RequestTrait;
 
