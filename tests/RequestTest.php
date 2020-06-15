@@ -50,6 +50,24 @@ class RequestTest extends TestCase
         self::assertEquals(self::DEFAULT_REQUEST_TARGET, $request->getRequestTarget());
     }
 
+    /**
+     * @return array
+     */
+    public function invalidRequestTargetProvider(): array
+    {
+        return [['/ *'], ['Request Target'], ["Request\nTarget"], ["Request\tTarget"], ["Request\rTarget"]];
+    }
+
+    /**
+     * @dataProvider invalidRequestTargetProvider
+     * @param mixed $requestTarget
+     */
+    public function testWithRequestTargetThrowExceptionInvalidRequestTarget($requestTarget): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->request->withRequestTarget($requestTarget);
+    }
+
     public function testWithMethod(): void
     {
         $request = $this->request->withMethod(Request::METHOD_POST);
