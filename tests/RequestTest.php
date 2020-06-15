@@ -73,6 +73,10 @@ class RequestTest extends TestCase
         $request = $this->request->withMethod(Request::METHOD_POST);
         self::assertNotEquals($this->request, $request);
         self::assertEquals(Request::METHOD_POST, $request->getMethod());
+
+        $request = $this->request->withMethod($method = 'PoSt');
+        self::assertNotEquals($this->request, $request);
+        self::assertEquals($method, $request->getMethod());
     }
 
     public function testWithMethodHasNotBeenChangedNotClone(): void

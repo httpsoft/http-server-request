@@ -16,12 +16,10 @@ use Psr\Http\Message\UriInterface;
 
 use function gettype;
 use function get_class;
-use function in_array;
 use function is_object;
 use function is_string;
 use function preg_match;
 use function sprintf;
-use function strtoupper;
 
 /**
  * Trait implementing the methods defined in `Psr\Http\Message\RequestInterface`.
@@ -46,22 +44,6 @@ trait RequestTrait
      * @var UriInterface
      */
     private UriInterface $uri;
-
-    /**
-     * @var array
-     */
-    private array $methods = [
-        RequestMethodInterface::METHOD_HEAD,
-        RequestMethodInterface::METHOD_GET,
-        RequestMethodInterface::METHOD_POST,
-        RequestMethodInterface::METHOD_PUT,
-        RequestMethodInterface::METHOD_PATCH,
-        RequestMethodInterface::METHOD_DELETE,
-        RequestMethodInterface::METHOD_PURGE,
-        RequestMethodInterface::METHOD_OPTIONS,
-        RequestMethodInterface::METHOD_TRACE,
-        RequestMethodInterface::METHOD_CONNECT,
-    ];
 
     /**
      * Retrieves the message's request target.
@@ -267,9 +249,7 @@ trait RequestTrait
      */
     private function setMethod(string $method): void
     {
-        $method = strtoupper($method);
-
-        if (!in_array($method, $this->methods) && !preg_match('/^[!#$%&\'*+.^_`|~0-9a-z-]+$/i', $method)) {
+        if (!preg_match('/^[!#$%&\'*+.^_`|~0-9a-z-]+$/i', $method)) {
             throw new InvalidArgumentException(sprintf('`%s` is not valid HTTP method.', $method));
         }
 
