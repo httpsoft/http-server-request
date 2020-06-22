@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HttpSoft\Request;
 
-use Fig\Http\Message\RequestMethodInterface;
 use HttpSoft\Stream\MessageTrait;
 use HttpSoft\Stream\StreamFactory;
 use HttpSoft\Uri\UriData;
@@ -16,10 +15,12 @@ use Psr\Http\Message\UriInterface;
 
 use function gettype;
 use function get_class;
+use function in_array;
 use function is_object;
 use function is_string;
 use function preg_match;
 use function sprintf;
+use function strtoupper;
 
 /**
  * Trait implementing the methods defined in `Psr\Http\Message\RequestInterface`.
@@ -249,7 +250,10 @@ trait RequestTrait
      */
     private function setMethod(string $method): void
     {
-        if (!preg_match('/^[!#$%&\'*+.^_`|~0-9a-z-]+$/i', $method)) {
+        if (
+            !in_array(strtoupper($method), RequestMethodInterface::METHODS)
+            && !preg_match('/^[!#$%&\'*+.^_`|~0-9a-z-]+$/i', $method)
+        ) {
             throw new InvalidArgumentException(sprintf('`%s` is not valid HTTP method.', $method));
         }
 

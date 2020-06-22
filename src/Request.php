@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HttpSoft\Request;
 
-use Fig\Http\Message\RequestMethodInterface;
 use HttpSoft\Uri\UriData;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;

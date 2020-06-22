@@ -20,7 +20,6 @@
     },
     "require": {
         "php": "^7.4",
-        "fig/http-message-util": "^1.1",
         "httpsoft/http-stream": "^1.0",
         "httpsoft/http-uploaded-file": "^1.0",
         "httpsoft/http-uri": "^1.0"
