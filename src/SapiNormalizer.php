@@ -19,7 +19,7 @@ use function strtolower;
 use function substr;
 use function ucwords;
 
-final class ServerNormalizer implements ServerNormalizerInterface
+final class SapiNormalizer implements ServerNormalizerInterface
 {
     /**
      * {@inheritDoc}

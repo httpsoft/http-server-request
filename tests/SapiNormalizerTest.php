@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace HttpSoft\Tests\Request;
 
-use HttpSoft\Request\ServerNormalizer;
+use HttpSoft\Request\SapiNormalizer;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UriInterface;
 
-class ServerNormalizerTest extends TestCase
+class SapiNormalizerTest extends TestCase
 {
     /**
-     * @var ServerNormalizer
+     * @var SapiNormalizer
      */
-    private ServerNormalizer $normalizer;
+    private SapiNormalizer $normalizer;
 
     /**
      * @var array
@@ -22,7 +22,7 @@ class ServerNormalizerTest extends TestCase
 
     public function setUp(): void
     {
-        $this->normalizer = new ServerNormalizer();
+        $this->normalizer = new SapiNormalizer();
         $this->server = [
             'HTTPS' => 'on',
             'SERVER_PORT' => '443',
