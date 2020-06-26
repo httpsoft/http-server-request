@@ -15,11 +15,6 @@ use function array_merge;
 class RequestTest extends TestCase
 {
     /**
-     * @const string
-     */
-    private const DEFAULT_REQUEST_TARGET = '/';
-
-    /**
      * @var Request
      */
     private Request $request;
@@ -31,7 +26,7 @@ class RequestTest extends TestCase
 
     public function testGetDefault(): void
     {
-        self::assertEquals(self::DEFAULT_REQUEST_TARGET, $this->request->getRequestTarget());
+        self::assertEquals('/', $this->request->getRequestTarget());
         self::assertEquals(Request::METHOD_GET, $this->request->getMethod());
         self::assertInstanceOf(UriInterface::class, $this->request->getUri());
     }
@@ -47,7 +42,7 @@ class RequestTest extends TestCase
     {
         $request = $this->request->withRequestTarget(null);
         self::assertEquals($this->request, $request);
-        self::assertEquals(self::DEFAULT_REQUEST_TARGET, $request->getRequestTarget());
+        self::assertEquals('/', $request->getRequestTarget());
     }
 
     /**
