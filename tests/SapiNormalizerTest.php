@@ -40,7 +40,7 @@ class SapiNormalizerTest extends TestCase
     public function testNormalizeMethod(): void
     {
         $method = $this->normalizer->normalizeMethod($this->server);
-        self::assertEquals($this->server['REQUEST_METHOD'], $method);
+        $this->assertSame($this->server['REQUEST_METHOD'], $method);
     }
 
     public function testNormalizeMethodIfRequestMethodHeaderIsEmptyOrNotExist(): void
@@ -50,21 +50,21 @@ class SapiNormalizerTest extends TestCase
 
         $server['REQUEST_METHOD'] = null;
         $method = $this->normalizer->normalizeMethod($server);
-        self::assertEquals($defaultMethod, $method);
+        $this->assertSame($defaultMethod, $method);
 
         $server['REQUEST_METHOD'] = '';
         $method = $this->normalizer->normalizeMethod($server);
-        self::assertEquals($defaultMethod, $method);
+        $this->assertSame($defaultMethod, $method);
 
         unset($server['REQUEST_METHOD']);
         $method = $this->normalizer->normalizeMethod($server);
-        self::assertEquals($defaultMethod, $method);
+        $this->assertSame($defaultMethod, $method);
     }
 
     public function testNormalizeProtocolVersion(): void
     {
         $version = $this->normalizer->normalizeProtocolVersion($this->server);
-        self::assertEquals($this->server['SERVER_PROTOCOL'], 'HTTP/' . $version);
+        $this->assertSame($this->server['SERVER_PROTOCOL'], 'HTTP/' . $version);
     }
 
     public function testNormalizeProtocolVersionIfServerProtocolHeaderIsEmptyOrNotExist(): void
@@ -74,65 +74,65 @@ class SapiNormalizerTest extends TestCase
 
         $server['SERVER_PROTOCOL'] = null;
         $version = $this->normalizer->normalizeProtocolVersion($server);
-        self::assertEquals($defaultVersion, $version);
+        $this->assertSame($defaultVersion, $version);
 
         $server['SERVER_PROTOCOL'] = '';
         $version = $this->normalizer->normalizeProtocolVersion($server);
-        self::assertEquals($defaultVersion, $version);
+        $this->assertSame($defaultVersion, $version);
 
         unset($server['SERVER_PROTOCOL']);
         $version = $this->normalizer->normalizeProtocolVersion($server);
-        self::assertEquals($defaultVersion, $version);
+        $this->assertSame($defaultVersion, $version);
     }
 
     public function testNormalizeUri(): void
     {
         $uri = $this->normalizer->normalizeUri($this->server);
-        self::assertInstanceOf(UriInterface::class, $uri);
-        self::assertEquals($this->server['HTTP_X_FORWARDED_PROTO'], $uri->getScheme());
-        self::assertEquals($this->server['HTTP_HOST'], $uri->getAuthority());
-        self::assertEquals('', $uri->getUserInfo());
-        self::assertEquals($this->server['HTTP_HOST'], $uri->getHost());
-        self::assertEquals(null, $uri->getPort());
-        self::assertEquals('/path', $uri->getPath());
-        self::assertEquals($this->server['QUERY_STRING'], $uri->getQuery());
-        self::assertEquals('https://example.com/path?name=value', (string) $uri);
+        $this->assertInstanceOf(UriInterface::class, $uri);
+        $this->assertSame($this->server['HTTP_X_FORWARDED_PROTO'], $uri->getScheme());
+        $this->assertSame($this->server['HTTP_HOST'], $uri->getAuthority());
+        $this->assertSame('', $uri->getUserInfo());
+        $this->assertSame($this->server['HTTP_HOST'], $uri->getHost());
+        $this->assertSame(null, $uri->getPort());
+        $this->assertSame('/path', $uri->getPath());
+        $this->assertSame($this->server['QUERY_STRING'], $uri->getQuery());
+        $this->assertSame('https://example.com/path?name=value', (string) $uri);
     }
 
     public function testNormalizeUriIfServerIsEmpty(): void
     {
         $uri = $this->normalizer->normalizeUri([]);
-        self::assertInstanceOf(UriInterface::class, $uri);
-        self::assertEquals('', $uri->getScheme());
-        self::assertEquals('', $uri->getAuthority());
-        self::assertEquals('', $uri->getUserInfo());
-        self::assertEquals('', $uri->getHost());
-        self::assertEquals(null, $uri->getPort());
-        self::assertEquals('', $uri->getPath());
-        self::assertEquals('', $uri->getQuery());
-        self::assertEquals('', (string) $uri);
+        $this->assertInstanceOf(UriInterface::class, $uri);
+        $this->assertSame('', $uri->getScheme());
+        $this->assertSame('', $uri->getAuthority());
+        $this->assertSame('', $uri->getUserInfo());
+        $this->assertSame('', $uri->getHost());
+        $this->assertSame(null, $uri->getPort());
+        $this->assertSame('', $uri->getPath());
+        $this->assertSame('', $uri->getQuery());
+        $this->assertSame('', (string) $uri);
     }
 
     public function testNormalizeHeaders(): void
     {
         $headers = $this->normalizer->normalizeHeaders($this->server);
 
-        self::assertEquals($this->server['HTTP_HOST'], $headers['Host']);
-        self::assertEquals($this->server['HTTP_CACHE_CONTROL'], $headers['Cache-Control']);
-        self::assertEquals($this->server['HTTP_X_FORWARDED_PROTO'], $headers['X-Forwarded-Proto']);
-        self::assertEquals($this->server['CONTENT_TYPE'], $headers['Content-Type']);
+        $this->assertSame($this->server['HTTP_HOST'], $headers['Host']);
+        $this->assertSame($this->server['HTTP_CACHE_CONTROL'], $headers['Cache-Control']);
+        $this->assertSame($this->server['HTTP_X_FORWARDED_PROTO'], $headers['X-Forwarded-Proto']);
+        $this->assertSame($this->server['CONTENT_TYPE'], $headers['Content-Type']);
 
-        self::assertFalse(isset($headers['HTTPS']));
-        self::assertFalse(isset($headers['SERVER_PORT']));
-        self::assertFalse(isset($headers['REQUEST_METHOD']));
-        self::assertFalse(isset($headers['SERVER_PROTOCOL']));
-        self::assertFalse(isset($headers['REQUEST_URI']));
-        self::assertFalse(isset($headers['QUERY_STRING']));
+        $this->assertFalse(isset($headers['HTTPS']));
+        $this->assertFalse(isset($headers['SERVER_PORT']));
+        $this->assertFalse(isset($headers['REQUEST_METHOD']));
+        $this->assertFalse(isset($headers['SERVER_PROTOCOL']));
+        $this->assertFalse(isset($headers['REQUEST_URI']));
+        $this->assertFalse(isset($headers['QUERY_STRING']));
     }
 
     public function testNormalizeHeadersIfServerIsEmpty(): void
     {
         $headers = $this->normalizer->normalizeHeaders([]);
-        self::assertEquals([], $headers);
+        $this->assertSame([], $headers);
     }
 }

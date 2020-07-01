@@ -27,29 +27,29 @@ class ServerRequestTest extends TestCase
 
     public function testGetDefault(): void
     {
-        self::assertEquals('/', $this->request->getRequestTarget());
-        self::assertEquals(ServerRequest::METHOD_GET, $this->request->getMethod());
-        self::assertInstanceOf(UriInterface::class, $this->request->getUri());
-        self::assertEquals([], $this->request->getAttributes());
-        self::assertEquals([], $this->request->getServerParams());
-        self::assertEquals([], $this->request->getCookieParams());
-        self::assertEquals([], $this->request->getQueryParams());
-        self::assertEquals([], $this->request->getUploadedFiles());
-        self::assertNull($this->request->getParsedBody());
+        $this->assertSame('/', $this->request->getRequestTarget());
+        $this->assertSame(ServerRequest::METHOD_GET, $this->request->getMethod());
+        $this->assertInstanceOf(UriInterface::class, $this->request->getUri());
+        $this->assertSame([], $this->request->getAttributes());
+        $this->assertSame([], $this->request->getServerParams());
+        $this->assertSame([], $this->request->getCookieParams());
+        $this->assertSame([], $this->request->getQueryParams());
+        $this->assertSame([], $this->request->getUploadedFiles());
+        $this->assertNull($this->request->getParsedBody());
     }
 
     public function testWithRequestTarget(): void
     {
         $request = $this->request->withRequestTarget('*');
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals('*', $request->getRequestTarget());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame('*', $request->getRequestTarget());
     }
 
     public function testWithRequestTargetHasNotBeenChangedNotClone(): void
     {
         $request = $this->request->withRequestTarget(null);
-        self::assertEquals($this->request, $request);
-        self::assertEquals('/', $request->getRequestTarget());
+        $this->assertSame($this->request, $request);
+        $this->assertSame('/', $request->getRequestTarget());
     }
 
     /**
@@ -73,19 +73,19 @@ class ServerRequestTest extends TestCase
     public function testWithMethod(): void
     {
         $request = $this->request->withMethod(ServerRequest::METHOD_POST);
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals(ServerRequest::METHOD_POST, $request->getMethod());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame(ServerRequest::METHOD_POST, $request->getMethod());
 
         $request = $this->request->withMethod($method = 'PoSt');
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals($method, $request->getMethod());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame($method, $request->getMethod());
     }
 
     public function testWithMethodHasNotBeenChangedNotClone(): void
     {
         $request = $this->request->withMethod(ServerRequest::METHOD_GET);
-        self::assertEquals($this->request, $request);
-        self::assertEquals(ServerRequest::METHOD_GET, $request->getMethod());
+        $this->assertSame($this->request, $request);
+        $this->assertSame(ServerRequest::METHOD_GET, $request->getMethod());
     }
 
     /**
@@ -110,29 +110,29 @@ class ServerRequestTest extends TestCase
     {
         $uri = $this->createMock(UriInterface::class);
         $request = $this->request->withUri($uri);
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals($uri, $request->getUri());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame($uri, $request->getUri());
     }
 
     public function testWithUriUpdateHostHeaderFromUri(): void
     {
         $request = new ServerRequest([], [], [], [], [], 'GET', 'http://example.com/path/to/action');
-        self::assertEquals(['Host' => ['example.com']], $request->getHeaders());
-        self::assertEquals(['example.com'], $request->getHeader('host'));
+        $this->assertSame(['Host' => ['example.com']], $request->getHeaders());
+        $this->assertSame(['example.com'], $request->getHeader('host'));
 
         $newUri = $request->getUri()->withHost('example.org');
 
         $newRequest = $request->withUri($newUri);
-        self::assertEquals(['Host' => ['example.org']], $newRequest->getHeaders());
-        self::assertEquals(['example.org'], $newRequest->getHeader('host'));
+        $this->assertSame(['Host' => ['example.org']], $newRequest->getHeaders());
+        $this->assertSame(['example.org'], $newRequest->getHeader('host'));
 
         $newRequestWithUriPort = $request->withUri($newUri->withPort(8080));
-        self::assertEquals(['Host' => ['example.org:8080']], $newRequestWithUriPort->getHeaders());
-        self::assertEquals(['example.org:8080'], $newRequestWithUriPort->getHeader('host'));
+        $this->assertSame(['Host' => ['example.org:8080']], $newRequestWithUriPort->getHeaders());
+        $this->assertSame(['example.org:8080'], $newRequestWithUriPort->getHeader('host'));
 
         $newRequestWithUriStandardPort = $request->withUri($newUri->withPort(80));
-        self::assertEquals(['Host' => ['example.org']], $newRequestWithUriStandardPort->getHeaders());
-        self::assertEquals(['example.org'], $newRequestWithUriStandardPort->getHeader('host'));
+        $this->assertSame(['Host' => ['example.org']], $newRequestWithUriStandardPort->getHeaders());
+        $this->assertSame(['example.org'], $newRequestWithUriStandardPort->getHeader('host'));
     }
 
     /**
@@ -156,27 +156,27 @@ class ServerRequestTest extends TestCase
     public function testWithAttributeAndGetAttributes(): void
     {
         $request = $this->request->withAttribute('name', 'value');
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals('value', $request->getAttribute('name'));
-        self::assertEquals(['name' => 'value'], $request->getAttributes());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame('value', $request->getAttribute('name'));
+        $this->assertSame(['name' => 'value'], $request->getAttributes());
     }
 
     public function testWithoutAttributeAndGetAttributes(): void
     {
         $firstRequest = $this->request->withAttribute('name', 'value');
-        self::assertNotEquals($this->request, $firstRequest);
-        self::assertEquals('value', $firstRequest->getAttribute('name'));
+        $this->assertNotSame($this->request, $firstRequest);
+        $this->assertSame('value', $firstRequest->getAttribute('name'));
         $secondRequest = $firstRequest->withoutAttribute('name');
-        self::assertNotEquals($firstRequest, $secondRequest);
-        self::assertNull($secondRequest->getAttribute('name'));
-        self::assertEquals([], $secondRequest->getAttributes());
+        $this->assertNotSame($firstRequest, $secondRequest);
+        $this->assertNull($secondRequest->getAttribute('name'));
+        $this->assertSame([], $secondRequest->getAttributes());
     }
 
     public function testGetAttributePassedDefaultValue(): void
     {
-        self::assertNull($this->request->getAttribute('name'));
-        self::assertEquals([], $this->request->getAttribute('name', []));
-        self::assertEquals(123, $this->request->getAttribute('name', 123));
+        $this->assertNull($this->request->getAttribute('name'));
+        $this->assertSame([], $this->request->getAttribute('name', []));
+        $this->assertSame(123, $this->request->getAttribute('name', 123));
     }
 
     public function testWithCookieParams(): void
@@ -185,8 +185,8 @@ class ServerRequestTest extends TestCase
             'cookie_name' => 'adf8ck8eb43218g8fa5f8259b6425371',
         ];
         $request = $this->request->withCookieParams($cookieParams);
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals($cookieParams, $request->getCookieParams());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame($cookieParams, $request->getCookieParams());
     }
 
     public function testWithQueryParams(): void
@@ -196,8 +196,8 @@ class ServerRequestTest extends TestCase
             'key2' => 'value2',
         ];
         $request = $this->request->withQueryParams($queryParams);
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals($queryParams, $request->getQueryParams());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame($queryParams, $request->getQueryParams());
     }
 
     /**
@@ -219,8 +219,8 @@ class ServerRequestTest extends TestCase
     public function testWithParsedBodyPassedValidParsedBody($parsedBody): void
     {
         $request = $this->request->withParsedBody($parsedBody);
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals($parsedBody, $request->getParsedBody());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame($parsedBody, $request->getParsedBody());
     }
 
     /**
@@ -255,8 +255,8 @@ class ServerRequestTest extends TestCase
         ];
 
         $request = $this->request->withUploadedFiles($uploadedFiles);
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals($uploadedFiles, $request->getUploadedFiles());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame($uploadedFiles, $request->getUploadedFiles());
     }
 
     /**

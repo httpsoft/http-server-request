@@ -27,40 +27,40 @@ class ServerRequestFactoryTest extends TestCase
     public function testCreate(): void
     {
         $serverRequest = ServerRequestFactory::create();
-        self::assertInstanceOf(ServerRequest::class, $serverRequest);
-        self::assertInstanceOf(ServerRequestInterface::class, $serverRequest);
-        self::assertNotEmpty($serverRequest->getServerParams());
-        self::assertEquals([], $serverRequest->getUploadedFiles());
-        self::assertEquals([], $serverRequest->getCookieParams());
-        self::assertEquals([], $serverRequest->getQueryParams());
-        self::assertEquals([], $serverRequest->getParsedBody());
-        self::assertEquals([], $serverRequest->getAttributes());
-        self::assertEquals('php://input', $serverRequest->getBody()->getMetadata('uri'));
+        $this->assertInstanceOf(ServerRequest::class, $serverRequest);
+        $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
+        $this->assertNotEmpty($serverRequest->getServerParams());
+        $this->assertSame([], $serverRequest->getUploadedFiles());
+        $this->assertSame([], $serverRequest->getCookieParams());
+        $this->assertSame([], $serverRequest->getQueryParams());
+        $this->assertSame([], $serverRequest->getParsedBody());
+        $this->assertSame([], $serverRequest->getAttributes());
+        $this->assertSame('php://input', $serverRequest->getBody()->getMetadata('uri'));
 
         $serverRequest = ServerRequestFactory::create($this->serverNormalizer);
-        self::assertInstanceOf(ServerRequest::class, $serverRequest);
-        self::assertInstanceOf(ServerRequestInterface::class, $serverRequest);
-        self::assertNotEmpty($serverRequest->getServerParams());
-        self::assertEquals([], $serverRequest->getUploadedFiles());
-        self::assertEquals([], $serverRequest->getCookieParams());
-        self::assertEquals([], $serverRequest->getQueryParams());
-        self::assertEquals([], $serverRequest->getParsedBody());
-        self::assertEquals([], $serverRequest->getAttributes());
-        self::assertEquals('php://input', $serverRequest->getBody()->getMetadata('uri'));
+        $this->assertInstanceOf(ServerRequest::class, $serverRequest);
+        $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
+        $this->assertNotEmpty($serverRequest->getServerParams());
+        $this->assertSame([], $serverRequest->getUploadedFiles());
+        $this->assertSame([], $serverRequest->getCookieParams());
+        $this->assertSame([], $serverRequest->getQueryParams());
+        $this->assertSame([], $serverRequest->getParsedBody());
+        $this->assertSame([], $serverRequest->getAttributes());
+        $this->assertSame('php://input', $serverRequest->getBody()->getMetadata('uri'));
     }
 
     public function testCreateFromGlobalsWithDefaultValues(): void
     {
         $serverRequest = ServerRequestFactory::createFromGlobals();
-        self::assertInstanceOf(ServerRequest::class, $serverRequest);
-        self::assertInstanceOf(ServerRequestInterface::class, $serverRequest);
-        self::assertNotEmpty($serverRequest->getServerParams());
-        self::assertEquals([], $serverRequest->getUploadedFiles());
-        self::assertEquals([], $serverRequest->getCookieParams());
-        self::assertEquals([], $serverRequest->getQueryParams());
-        self::assertEquals([], $serverRequest->getParsedBody());
-        self::assertEquals([], $serverRequest->getAttributes());
-        self::assertEquals('php://input', $serverRequest->getBody()->getMetadata('uri'));
+        $this->assertInstanceOf(ServerRequest::class, $serverRequest);
+        $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
+        $this->assertNotEmpty($serverRequest->getServerParams());
+        $this->assertSame([], $serverRequest->getUploadedFiles());
+        $this->assertSame([], $serverRequest->getCookieParams());
+        $this->assertSame([], $serverRequest->getQueryParams());
+        $this->assertSame([], $serverRequest->getParsedBody());
+        $this->assertSame([], $serverRequest->getAttributes());
+        $this->assertSame('php://input', $serverRequest->getBody()->getMetadata('uri'));
     }
 
     public function testCreateFromGlobalsWithProvidedEmptyArrays(): void
@@ -73,15 +73,15 @@ class ServerRequestFactoryTest extends TestCase
             $post = [],
             $this->serverNormalizer
         );
-        self::assertInstanceOf(ServerRequest::class, $serverRequest);
-        self::assertInstanceOf(ServerRequestInterface::class, $serverRequest);
-        self::assertEquals($server, $serverRequest->getServerParams());
-        self::assertEquals($files, $serverRequest->getUploadedFiles());
-        self::assertEquals($cookie, $serverRequest->getCookieParams());
-        self::assertEquals($get, $serverRequest->getQueryParams());
-        self::assertEquals($post, $serverRequest->getParsedBody());
-        self::assertEquals([], $serverRequest->getAttributes());
-        self::assertEquals('php://input', $serverRequest->getBody()->getMetadata('uri'));
+        $this->assertInstanceOf(ServerRequest::class, $serverRequest);
+        $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
+        $this->assertSame($server, $serverRequest->getServerParams());
+        $this->assertSame($files, $serverRequest->getUploadedFiles());
+        $this->assertSame($cookie, $serverRequest->getCookieParams());
+        $this->assertSame($get, $serverRequest->getQueryParams());
+        $this->assertSame($post, $serverRequest->getParsedBody());
+        $this->assertSame([], $serverRequest->getAttributes());
+        $this->assertSame('php://input', $serverRequest->getBody()->getMetadata('uri'));
     }
 
     public function testCreateFromGlobalsWithProvidedNotEmptyArrays(): void
@@ -108,16 +108,16 @@ class ServerRequestFactoryTest extends TestCase
             $post = ['post-key' => 'post-value'],
             $this->serverNormalizer
         );
-        self::assertInstanceOf(ServerRequest::class, $serverRequest);
-        self::assertInstanceOf(ServerRequestInterface::class, $serverRequest);
-        self::assertEquals($server, $serverRequest->getServerParams());
-        self::assertEquals($files['file']['name'], $serverRequest->getUploadedFiles()['file']->getClientFilename());
-        self::assertEquals($cookie, $serverRequest->getCookieParams());
-        self::assertEquals($get, $serverRequest->getQueryParams());
-        self::assertEquals($post, $serverRequest->getParsedBody());
-        self::assertEquals([], $serverRequest->getAttributes());
-        self::assertEquals('php://input', $serverRequest->getBody()->getMetadata('uri'));
-        self::assertEquals(
+        $this->assertInstanceOf(ServerRequest::class, $serverRequest);
+        $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
+        $this->assertSame($server, $serverRequest->getServerParams());
+        $this->assertSame($files['file']['name'], $serverRequest->getUploadedFiles()['file']->getClientFilename());
+        $this->assertSame($cookie, $serverRequest->getCookieParams());
+        $this->assertSame($get, $serverRequest->getQueryParams());
+        $this->assertSame($post, $serverRequest->getParsedBody());
+        $this->assertSame([], $serverRequest->getAttributes());
+        $this->assertSame('php://input', $serverRequest->getBody()->getMetadata('uri'));
+        $this->assertSame(
             [
                 'Host' => ['example.com'],
                 'Cookie' => ['cookie-key=cookie-value'],
@@ -132,28 +132,28 @@ class ServerRequestFactoryTest extends TestCase
         $factory = new ServerRequestFactory();
 
         $serverRequest = $factory->createServerRequest('GET', 'https://example.com');
-        self::assertInstanceOf(ServerRequest::class, $serverRequest);
-        self::assertInstanceOf(ServerRequestInterface::class, $serverRequest);
-        self::assertEquals([], $serverRequest->getServerParams());
-        self::assertEquals([], $serverRequest->getUploadedFiles());
-        self::assertEquals([], $serverRequest->getCookieParams());
-        self::assertEquals([], $serverRequest->getQueryParams());
-        self::assertNull($serverRequest->getParsedBody());
-        self::assertEquals([], $serverRequest->getAttributes());
-        self::assertEquals('php://temp', $serverRequest->getBody()->getMetadata('uri'));
+        $this->assertInstanceOf(ServerRequest::class, $serverRequest);
+        $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
+        $this->assertSame([], $serverRequest->getServerParams());
+        $this->assertSame([], $serverRequest->getUploadedFiles());
+        $this->assertSame([], $serverRequest->getCookieParams());
+        $this->assertSame([], $serverRequest->getQueryParams());
+        $this->assertNull($serverRequest->getParsedBody());
+        $this->assertSame([], $serverRequest->getAttributes());
+        $this->assertSame('php://temp', $serverRequest->getBody()->getMetadata('uri'));
 
         $serverRequest = $factory->createServerRequest('GET', 'https://example.com', $server = [
             'HTTP_HOST' => 'example.com',
             'CONTENT_TYPE' => 'text/html; charset=UTF-8',
         ]);
-        self::assertInstanceOf(ServerRequest::class, $serverRequest);
-        self::assertInstanceOf(ServerRequestInterface::class, $serverRequest);
-        self::assertEquals($server, $serverRequest->getServerParams());
-        self::assertEquals([], $serverRequest->getUploadedFiles());
-        self::assertEquals([], $serverRequest->getCookieParams());
-        self::assertEquals([], $serverRequest->getQueryParams());
-        self::assertNull($serverRequest->getParsedBody());
-        self::assertEquals([], $serverRequest->getAttributes());
-        self::assertEquals('php://temp', $serverRequest->getBody()->getMetadata('uri'));
+        $this->assertInstanceOf(ServerRequest::class, $serverRequest);
+        $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
+        $this->assertSame($server, $serverRequest->getServerParams());
+        $this->assertSame([], $serverRequest->getUploadedFiles());
+        $this->assertSame([], $serverRequest->getCookieParams());
+        $this->assertSame([], $serverRequest->getQueryParams());
+        $this->assertNull($serverRequest->getParsedBody());
+        $this->assertSame([], $serverRequest->getAttributes());
+        $this->assertSame('php://temp', $serverRequest->getBody()->getMetadata('uri'));
     }
 }

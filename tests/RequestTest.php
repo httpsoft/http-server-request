@@ -26,23 +26,23 @@ class RequestTest extends TestCase
 
     public function testGetDefault(): void
     {
-        self::assertEquals('/', $this->request->getRequestTarget());
-        self::assertEquals(Request::METHOD_GET, $this->request->getMethod());
-        self::assertInstanceOf(UriInterface::class, $this->request->getUri());
+        $this->assertSame('/', $this->request->getRequestTarget());
+        $this->assertSame(Request::METHOD_GET, $this->request->getMethod());
+        $this->assertInstanceOf(UriInterface::class, $this->request->getUri());
     }
 
     public function testWithRequestTarget(): void
     {
         $request = $this->request->withRequestTarget('*');
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals('*', $request->getRequestTarget());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame('*', $request->getRequestTarget());
     }
 
     public function testWithRequestTargetHasNotBeenChangedNotClone(): void
     {
         $request = $this->request->withRequestTarget(null);
-        self::assertEquals($this->request, $request);
-        self::assertEquals('/', $request->getRequestTarget());
+        $this->assertSame($this->request, $request);
+        $this->assertSame('/', $request->getRequestTarget());
     }
 
     /**
@@ -66,19 +66,19 @@ class RequestTest extends TestCase
     public function testWithMethod(): void
     {
         $request = $this->request->withMethod(Request::METHOD_POST);
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals(Request::METHOD_POST, $request->getMethod());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame(Request::METHOD_POST, $request->getMethod());
 
         $request = $this->request->withMethod($method = 'PoSt');
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals($method, $request->getMethod());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame($method, $request->getMethod());
     }
 
     public function testWithMethodHasNotBeenChangedNotClone(): void
     {
         $request = $this->request->withMethod(Request::METHOD_GET);
-        self::assertEquals($this->request, $request);
-        self::assertEquals(Request::METHOD_GET, $request->getMethod());
+        $this->assertSame($this->request, $request);
+        $this->assertSame(Request::METHOD_GET, $request->getMethod());
     }
 
     /**
@@ -103,29 +103,29 @@ class RequestTest extends TestCase
     {
         $uri = $this->createMock(UriInterface::class);
         $request = $this->request->withUri($uri);
-        self::assertNotEquals($this->request, $request);
-        self::assertEquals($uri, $request->getUri());
+        $this->assertNotSame($this->request, $request);
+        $this->assertSame($uri, $request->getUri());
     }
 
     public function testWithUriUpdateHostHeaderFromUri(): void
     {
         $request = new Request('GET', 'http://example.com/path/to/action');
-        self::assertEquals(['Host' => ['example.com']], $request->getHeaders());
-        self::assertEquals(['example.com'], $request->getHeader('host'));
+        $this->assertSame(['Host' => ['example.com']], $request->getHeaders());
+        $this->assertSame(['example.com'], $request->getHeader('host'));
 
         $newUri = $request->getUri()->withHost('example.org');
 
         $newRequest = $request->withUri($newUri);
-        self::assertEquals(['Host' => ['example.org']], $newRequest->getHeaders());
-        self::assertEquals(['example.org'], $newRequest->getHeader('host'));
+        $this->assertSame(['Host' => ['example.org']], $newRequest->getHeaders());
+        $this->assertSame(['example.org'], $newRequest->getHeader('host'));
 
         $newRequestWithUriPort = $request->withUri($newUri->withPort(8080));
-        self::assertEquals(['Host' => ['example.org:8080']], $newRequestWithUriPort->getHeaders());
-        self::assertEquals(['example.org:8080'], $newRequestWithUriPort->getHeader('host'));
+        $this->assertSame(['Host' => ['example.org:8080']], $newRequestWithUriPort->getHeaders());
+        $this->assertSame(['example.org:8080'], $newRequestWithUriPort->getHeader('host'));
 
         $newRequestWithUriStandardPort = $request->withUri($newUri->withPort(80));
-        self::assertEquals(['Host' => ['example.org']], $newRequestWithUriStandardPort->getHeaders());
-        self::assertEquals(['example.org'], $newRequestWithUriStandardPort->getHeader('host'));
+        $this->assertSame(['Host' => ['example.org']], $newRequestWithUriStandardPort->getHeaders());
+        $this->assertSame(['example.org'], $newRequestWithUriStandardPort->getHeader('host'));
     }
 
     /**
