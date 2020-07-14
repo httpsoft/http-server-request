@@ -100,10 +100,10 @@ trait RequestTrait
             return $this;
         }
 
-        if (is_string($requestTarget) && preg_match('/\s/', $requestTarget)) {
+        if (!is_string($requestTarget) || preg_match('/\s/', $requestTarget)) {
             throw new InvalidArgumentException(sprintf(
-                '`%s` is not valid request target. Request target cannot contain whitespace.',
-                $requestTarget
+                '`%s` is not valid request target. Request target must be a string and cannot contain whitespace',
+                (is_object($requestTarget) ? get_class($requestTarget) : gettype($requestTarget))
             ));
         }
 
