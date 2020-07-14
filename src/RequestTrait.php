@@ -245,7 +245,7 @@ trait RequestTrait
     /**
      * Set and validate the HTTP method
      *
-     * @param mixed $method
+     * @param string $method
      * @throws InvalidArgumentException for invalid HTTP method.
      */
     private function setMethod(string $method): void
