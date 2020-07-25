@@ -6,7 +6,6 @@ namespace HttpSoft\Request;
 
 use HttpSoft\Stream\MessageTrait;
 use HttpSoft\Stream\StreamFactory;
-use HttpSoft\Uri\UriData;
 use HttpSoft\Uri\UriFactory;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
@@ -225,7 +224,7 @@ trait RequestTrait
      */
     private function init(
         string $method = RequestMethodInterface::METHOD_GET,
-        $uri = UriData::EMPTY_STRING,
+        $uri = '',
         $body = 'php://temp',
         array $headers = [],
         string $protocol = '1.1'

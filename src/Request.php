@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HttpSoft\Request;
 
-use HttpSoft\Uri\UriData;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -22,7 +21,7 @@ final class Request implements RequestInterface, RequestMethodInterface
      */
     public function __construct(
         string $method = self::METHOD_GET,
-        $uri = UriData::EMPTY_STRING,
+        $uri = '',
         $body = 'php://temp',
         array $headers = [],
         string $protocol = '1.1'

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HttpSoft\Request;
 
-use HttpSoft\Uri\UriData;
 use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -71,7 +70,7 @@ final class ServerRequest implements ServerRequestInterface, RequestMethodInterf
         array $queryParams = [],
         $parsedBody = null,
         string $method = self::METHOD_GET,
-        $uri = UriData::EMPTY_STRING,
+        $uri = '',
         $body = 'php://input',
         array $headers = [],
         string $protocol = '1.1'
