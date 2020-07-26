@@ -28,13 +28,13 @@ composer require httpsoft/http-request
 use HttpSoft\Request\Request;
 use HttpSoft\Request\RequestFactory;
 
-$request = new Request('POST', 'http://example.com', 'data://,Content', ['Content-Type' => 'text/html'], '2');
+$request = new Request('POST', 'http://example.com', ['Content-Type' => 'text/html'], 'data://,Content', '2');
 // Or using the factory:
 $request = RequestFactory::create(
     'POST', // Request method
     'https://example.com', // Request URI
-    'data://,Content', // HTTP message body
     ['Content-Type' => 'text/html' /* Other headers */],
+    'data://,Content', // HTTP message body
     '2' // HTTP protocol version
 );
 
@@ -59,8 +59,8 @@ $request = new ServerRequest(
     $_POST,
     'GET', // Request method
     'https://example.com', // Request URI
-    'php://input', // HTTP message body
     [/* Headers */],
+    'php://input', // HTTP message body
     '2' // HTTP protocol version
 );
 // Or using the factory (all necessary data will be received automatically):

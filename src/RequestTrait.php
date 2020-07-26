@@ -218,15 +218,15 @@ trait RequestTrait
     /**
      * @param string $method
      * @param UriInterface|string $uri
-     * @param StreamInterface|string|resource $body
      * @param array $headers
+     * @param StreamInterface|string|resource $body
      * @param string $protocol
      */
     private function init(
         string $method = RequestMethodInterface::METHOD_GET,
         $uri = '',
-        $body = 'php://temp',
         array $headers = [],
+        $body = 'php://temp',
         string $protocol = '1.1'
     ): void {
         $this->setMethod($method);

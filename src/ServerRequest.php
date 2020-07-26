@@ -59,8 +59,8 @@ final class ServerRequest implements ServerRequestInterface, RequestMethodInterf
      * @param array|object|null $parsedBody
      * @param string $method
      * @param UriInterface|string $uri
-     * @param StreamInterface|string|resource $body
      * @param array $headers
+     * @param StreamInterface|string|resource $body
      * @param string $protocol
      */
     public function __construct(
@@ -71,8 +71,8 @@ final class ServerRequest implements ServerRequestInterface, RequestMethodInterf
         $parsedBody = null,
         string $method = self::METHOD_GET,
         $uri = '',
-        $body = 'php://input',
         array $headers = [],
+        $body = 'php://input',
         string $protocol = '1.1'
     ) {
         $this->validateUploadedFiles($uploadedFiles);
@@ -81,7 +81,7 @@ final class ServerRequest implements ServerRequestInterface, RequestMethodInterf
         $this->cookieParams = $cookieParams;
         $this->queryParams = $queryParams;
         $this->parsedBody = $parsedBody;
-        $this->init($method, $uri, $body, $headers, $protocol);
+        $this->init($method, $uri, $headers, $body, $protocol);
     }
 
     /**

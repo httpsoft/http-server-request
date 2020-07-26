@@ -48,8 +48,8 @@ final class ServerRequestFactory implements ServerRequestFactoryInterface
             $post ?? $_POST,
             $normalizer->normalizeMethod($server),
             $normalizer->normalizeUri($server),
-            new StreamPhpInput(),
             $normalizer->normalizeHeaders($server),
+            new StreamPhpInput(),
             $normalizer->normalizeProtocolVersion($server)
         );
     }
@@ -59,6 +59,6 @@ final class ServerRequestFactory implements ServerRequestFactoryInterface
      */
     public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
     {
-        return new ServerRequest($serverParams, [], [], [], null, $method, $uri, 'php://temp');
+        return new ServerRequest($serverParams, [], [], [], null, $method, $uri, [], 'php://temp');
     }
 }

@@ -14,19 +14,19 @@ final class RequestFactory implements RequestFactoryInterface
     /**
      * @param string $method
      * @param UriInterface|string $uri
-     * @param StreamInterface|string|resource $body
      * @param array $headers
+     * @param StreamInterface|string|resource $body
      * @param string $protocol
      * @return RequestInterface
      */
     public static function create(
         string $method,
         $uri,
-        $body = 'php://temp',
         array $headers = [],
+        $body = 'php://temp',
         string $protocol = '1.1'
     ): RequestInterface {
-        return new Request($method, $uri, $body, $headers, $protocol);
+        return new Request($method, $uri, $headers, $body, $protocol);
     }
 
     /**

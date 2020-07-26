@@ -28,8 +28,8 @@ class RequestFactoryTest extends TestCase
         $request = RequestFactory::create(
             $method = 'POST',
             $uri = 'http://example.com',
-            'data://,Content',
             ['Content-Type' => 'text/html'],
+            'data://,Content',
             $protocol = '1.0'
         );
         $this->assertSame($method, $request->getMethod());
