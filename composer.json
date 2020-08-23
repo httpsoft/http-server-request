@@ -1,6 +1,6 @@
 {
     "name": "httpsoft/http-server-request",
-    "description": "Functionality for creating a PSR-7 ServerRequest",
+    "description": "Infrastructure for creating PSR-7 ServerRequest and UploadedFile",
     "keywords": ["php", "http", "http-server-request", "psr-7", "http-message"],
     "homepage": "https://httpsoft.org/",
     "type": "library",

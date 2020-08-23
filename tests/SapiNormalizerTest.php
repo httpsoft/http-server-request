@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HttpSoft\Tests\Request;
+namespace HttpSoft\Tests\ServerRequest;
 
-use HttpSoft\Request\SapiNormalizer;
+use HttpSoft\ServerRequest\SapiNormalizer;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UriInterface;
 

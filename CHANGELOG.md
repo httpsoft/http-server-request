@@ -1,4 +1,4 @@
-# HTTP Request Change Log
+# HTTP Server Request Change Log
 
 ## 1.0.0 - under development
 

@@ -19,7 +19,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="HttpSoft Request Test Suite">
+        <testsuite name="HttpSoft Server Request Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

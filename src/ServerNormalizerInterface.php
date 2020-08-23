@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HttpSoft\Request;
+namespace HttpSoft\ServerRequest;
 
 use Psr\Http\Message\UriInterface;
 

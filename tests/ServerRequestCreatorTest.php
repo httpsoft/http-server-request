@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace HttpSoft\Tests\Request;
+namespace HttpSoft\Tests\ServerRequest;
 
-use HttpSoft\Request\SapiNormalizer;
-use HttpSoft\Request\ServerRequest;
-use HttpSoft\Request\ServerRequestFactory;
+use HttpSoft\Message\ServerRequest;
+use HttpSoft\ServerRequest\SapiNormalizer;
+use HttpSoft\ServerRequest\ServerRequestCreator;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
 use const UPLOAD_ERR_OK;
 
-class ServerRequestFactoryTest extends TestCase
+class ServerRequestCreatorTest extends TestCase
 {
     /**
      * @var SapiNormalizer
@@ -26,7 +26,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testCreate(): void
     {
-        $serverRequest = ServerRequestFactory::create();
+        $serverRequest = ServerRequestCreator::create();
         $this->assertInstanceOf(ServerRequest::class, $serverRequest);
         $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
         $this->assertNotEmpty($serverRequest->getServerParams());
@@ -37,7 +37,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame([], $serverRequest->getAttributes());
         $this->assertSame('php://input', $serverRequest->getBody()->getMetadata('uri'));
 
-        $serverRequest = ServerRequestFactory::create($this->serverNormalizer);
+        $serverRequest = ServerRequestCreator::create($this->serverNormalizer);
         $this->assertInstanceOf(ServerRequest::class, $serverRequest);
         $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
         $this->assertNotEmpty($serverRequest->getServerParams());
@@ -51,7 +51,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testCreateFromGlobalsWithDefaultValues(): void
     {
-        $serverRequest = ServerRequestFactory::createFromGlobals();
+        $serverRequest = ServerRequestCreator::createFromGlobals();
         $this->assertInstanceOf(ServerRequest::class, $serverRequest);
         $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
         $this->assertNotEmpty($serverRequest->getServerParams());
@@ -65,7 +65,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testCreateFromGlobalsWithProvidedEmptyArrays(): void
     {
-        $serverRequest = ServerRequestFactory::createFromGlobals(
+        $serverRequest = ServerRequestCreator::createFromGlobals(
             $server = [],
             $files = [],
             $cookie = [],
@@ -86,7 +86,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testCreateFromGlobalsWithProvidedNotEmptyArrays(): void
     {
-        $serverRequest = ServerRequestFactory::createFromGlobals(
+        $serverRequest = ServerRequestCreator::createFromGlobals(
             $server = [
                 'HTTP_HOST' => 'example.com',
                 'HTTP_COOKIE' => 'cookie-key=cookie-value',
@@ -125,35 +125,5 @@ class ServerRequestFactoryTest extends TestCase
             ],
             $serverRequest->getHeaders()
         );
-    }
-
-    public function testCreateServerRequest(): void
-    {
-        $factory = new ServerRequestFactory();
-
-        $serverRequest = $factory->createServerRequest('GET', 'https://example.com');
-        $this->assertInstanceOf(ServerRequest::class, $serverRequest);
-        $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
-        $this->assertSame([], $serverRequest->getServerParams());
-        $this->assertSame([], $serverRequest->getUploadedFiles());
-        $this->assertSame([], $serverRequest->getCookieParams());
-        $this->assertSame([], $serverRequest->getQueryParams());
-        $this->assertNull($serverRequest->getParsedBody());
-        $this->assertSame([], $serverRequest->getAttributes());
-        $this->assertSame('php://temp', $serverRequest->getBody()->getMetadata('uri'));
-
-        $serverRequest = $factory->createServerRequest('GET', 'https://example.com', $server = [
-            'HTTP_HOST' => 'example.com',
-            'CONTENT_TYPE' => 'text/html; charset=UTF-8',
-        ]);
-        $this->assertInstanceOf(ServerRequest::class, $serverRequest);
-        $this->assertInstanceOf(ServerRequestInterface::class, $serverRequest);
-        $this->assertSame($server, $serverRequest->getServerParams());
-        $this->assertSame([], $serverRequest->getUploadedFiles());
-        $this->assertSame([], $serverRequest->getCookieParams());
-        $this->assertSame([], $serverRequest->getQueryParams());
-        $this->assertNull($serverRequest->getParsedBody());
-        $this->assertSame([], $serverRequest->getAttributes());
-        $this->assertSame('php://temp', $serverRequest->getBody()->getMetadata('uri'));
     }
 }

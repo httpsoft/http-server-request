@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HttpSoft\Request;
+namespace HttpSoft\ServerRequest;
 
-use HttpSoft\Stream\StreamPhpInput;
-use HttpSoft\UploadedFile\UploadedFileNormalizer;
-use Psr\Http\Message\ServerRequestFactoryInterface;
+use HttpSoft\Message\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class ServerRequestFactory implements ServerRequestFactoryInterface
+final class ServerRequestCreator
 {
     /**
      * @param ServerNormalizerInterface|null $normalizer
@@ -42,23 +40,15 @@ final class ServerRequestFactory implements ServerRequestFactoryInterface
 
         return new ServerRequest(
             $server,
-            UploadedFileNormalizer::normalize($files ?? $_FILES),
+            UploadedFileCreator::createFromGlobals($files ?? $_FILES),
             $cookie ?? $_COOKIE,
             $get ?? $_GET,
             $post ?? $_POST,
             $normalizer->normalizeMethod($server),
             $normalizer->normalizeUri($server),
             $normalizer->normalizeHeaders($server),
-            new StreamPhpInput(),
+            new PhpInputStream(),
             $normalizer->normalizeProtocolVersion($server)
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
-    {
-        return new ServerRequest($serverParams, [], [], [], null, $method, $uri, [], 'php://temp');
     }
 }

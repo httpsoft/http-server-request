@@ -14,12 +14,11 @@
     </projectFiles>
 
     <issueHandlers>
-        <DocblockTypeContradiction errorLevel="info" />
-        <LessSpecificImplementedReturnType errorLevel="info" />
-        <MixedArgumentTypeCoercion errorLevel="info" />
+        <InvalidReturnStatement errorLevel="info" />
+        <InvalidReturnType errorLevel="info" />
+        <MixedArgument errorLevel="info" />
         <MixedAssignment errorLevel="info" />
-        <MixedPropertyTypeCoercion errorLevel="info" />
-        <PropertyNotSetInConstructor errorLevel="info" />
-        <RedundantConditionGivenDocblockType errorLevel="info" />
+        <MixedArgumentTypeCoercion errorLevel="info" />
+        <PossiblyNullArgument errorLevel="info" />
     </issueHandlers>
 </psalm>

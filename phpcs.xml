@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="HttpSoft Request Coding Standard">
-    <description>HttpSoft Request Coding Standard</description>
+<ruleset name="HttpSoft Server Request Coding Standard">
+    <description>HttpSoft Server Request Coding Standard</description>
 
     <!-- display progress -->
     <arg value="p"/>
