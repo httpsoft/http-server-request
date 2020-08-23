@@ -1,11 +1,11 @@
 # HTTP Server Request
 
-[![License](https://poser.pugx.org/httpsoft/http-request/license)](https://packagist.org/packages/httpsoft/http-request)
-[![Latest Stable Version](https://poser.pugx.org/httpsoft/http-request/v)](https://packagist.org/packages/httpsoft/http-request)
-[![Total Downloads](https://poser.pugx.org/httpsoft/http-request/downloads)](https://packagist.org/packages/httpsoft/http-request)
-[![GitHub Build Status](https://github.com/httpsoft/http-request/workflows/build/badge.svg)](https://github.com/httpsoft/http-request/actions)
-[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/httpsoft/http-request/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/httpsoft/http-request/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/httpsoft/http-request/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/httpsoft/http-request/?branch=master)
+[![License](https://poser.pugx.org/httpsoft/http-server-request/license)](https://packagist.org/packages/httpsoft/http-server-request)
+[![Latest Stable Version](https://poser.pugx.org/httpsoft/http-server-request/v)](https://packagist.org/packages/httpsoft/http-server-request)
+[![Total Downloads](https://poser.pugx.org/httpsoft/http-server-request/downloads)](https://packagist.org/packages/httpsoft/http-server-request)
+[![GitHub Build Status](https://github.com/httpsoft/http-server-request/workflows/build/badge.svg)](https://github.com/httpsoft/http-server-request/actions)
+[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/httpsoft/http-server-request/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/httpsoft/http-server-request/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/httpsoft/http-server-request/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/httpsoft/http-server-request/?branch=master)
 
 This package makes it easy and flexible to create PSR-7 components [ServerRequest](https://github.com/php-fig/http-message/blob/master/src/ServerRequestInterface.php) and [UploadedFile](https://github.com/php-fig/http-message/blob/master/src/UploadedFileInterface.php).
 
