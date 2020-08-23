@@ -66,13 +66,16 @@ jobs:
             -   name: PHPCS check
                 run: vendor/bin/phpcs
 
-            -   name: Psalm static analysis on PHP 7.4
-                if: matrix.php-version == '7.4'
+            -   name: Psalm static analysis
                 run: vendor/bin/psalm --no-progress
 
-            -   name: PHPUnit run on PHP 7.4
+            -   name: PHPUnit run with coverage on PHP 7.4
                 if: matrix.php-version == '7.4'
                 run: vendor/bin/phpunit --coverage-clover=coverage.clover
+
+            -   name: PHPUnit run without coverage on PHP 8.0
+                if: matrix.php-version == '8.0'
+                run: vendor/bin/phpunit
 
             -   name: Code coverage on PHP 7.4
                 if: matrix.php-version == '7.4'
