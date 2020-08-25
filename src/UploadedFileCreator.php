@@ -56,6 +56,7 @@ final class UploadedFileCreator
      * @param array $file
      * @return UploadedFileInterface
      * @throws InvalidArgumentException
+     * @psalm-suppress MixedArgument
      */
     public static function createFromArray(array $file): UploadedFileInterface
     {
@@ -87,8 +88,9 @@ final class UploadedFileCreator
      * @see https://www.php.net/manual/reserved.variables.files.php
      *
      * @param array $files
-     * @return UploadedFileInterface[]|array[][]
+     * @return UploadedFileInterface[]|array[]
      * @throws InvalidArgumentException
+     * @psalm-suppress MixedAssignment
      */
     public static function createFromGlobals(array $files = []): array
     {
@@ -130,6 +132,8 @@ final class UploadedFileCreator
      * @param array $files
      * @return UploadedFileInterface[]
      * @throws InvalidArgumentException
+     * @psalm-suppress MixedArgument
+     * @psalm-suppress MixedArgumentTypeCoercion
      */
     private static function createMultipleUploadedFiles(array $files): array
     {
@@ -163,7 +167,10 @@ final class UploadedFileCreator
      * @param int[]|array[] $errors
      * @param string[]|array[]|null $names
      * @param string[]|array[]|null $types
-     * @return UploadedFileInterface[]|array[]
+     * @return UploadedFileInterface[]
+     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress InvalidReturnStatement
+     * @psalm-suppress MixedArgumentTypeCoercion
      */
     private static function buildTree(array $tmpNames, array $sizes, array $errors, ?array $names, ?array $types): array
     {

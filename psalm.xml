@@ -12,13 +12,4 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
-
-    <issueHandlers>
-        <InvalidReturnStatement errorLevel="info" />
-        <InvalidReturnType errorLevel="info" />
-        <MixedArgument errorLevel="info" />
-        <MixedAssignment errorLevel="info" />
-        <MixedArgumentTypeCoercion errorLevel="info" />
-        <PossiblyNullArgument errorLevel="info" />
-    </issueHandlers>
 </psalm>

@@ -46,6 +46,8 @@ final class SapiNormalizer implements ServerNormalizerInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MixedAssignment
      */
     public function normalizeUri(array $server): UriInterface
     {
@@ -80,6 +82,8 @@ final class SapiNormalizer implements ServerNormalizerInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MixedAssignment
      */
     public function normalizeHeaders(array $server): array
     {
