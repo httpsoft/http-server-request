@@ -4,6 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/httpsoft/http-server-request/v)](https://packagist.org/packages/httpsoft/http-server-request)
 [![Total Downloads](https://poser.pugx.org/httpsoft/http-server-request/downloads)](https://packagist.org/packages/httpsoft/http-server-request)
 [![GitHub Build Status](https://github.com/httpsoft/http-server-request/workflows/build/badge.svg)](https://github.com/httpsoft/http-server-request/actions)
+[![GitHub Static Analysis Status](https://github.com/httpsoft/http-server-request/workflows/static/badge.svg)](https://github.com/httpsoft/http-server-request/actions)
 [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/httpsoft/http-server-request/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/httpsoft/http-server-request/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/httpsoft/http-server-request/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/httpsoft/http-server-request/?branch=master)
 
