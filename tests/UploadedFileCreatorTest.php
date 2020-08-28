@@ -103,7 +103,7 @@ class UploadedFileCreatorTest extends TestCase
             'file' => [
                 'name' => 'file.txt',
                 'type' => 'text/plain',
-                'tmp_name' => '/tmp/phpn3FmFr',
+                'tmp_name' => $this->tmpFile,
                 'error' => UPLOAD_ERR_OK,
                 'size' => 1024,
             ],
@@ -132,8 +132,8 @@ class UploadedFileCreatorTest extends TestCase
                     'file_2' => 'image/png',
                 ],
                 'tmp_name' => [
-                    'file_1' => '/tmp/phpN3FmFr',
-                    'file_2' => '/tmp/phpLs7DaJ',
+                    'file_1' => $this->tmpFile,
+                    'file_2' => $this->tmpFile,
                 ],
                 'error' => [
                     'file_1' => UPLOAD_ERR_OK,
@@ -196,8 +196,8 @@ class UploadedFileCreatorTest extends TestCase
                 'tmp_name' => [
                     'data' => [
                         'nested' => [
-                            'file_1' => '/tmp/phpN3FmFr',
-                            'file_2' => '/tmp/phpLs7DaJ',
+                            'file_1' => $this->tmpFile,
+                            'file_2' => $this->tmpFile,
                         ],
                     ],
                 ],
@@ -256,14 +256,14 @@ class UploadedFileCreatorTest extends TestCase
             'file_1' => [
                 'name' => 'file.txt',
                 'type' => 'text/plain',
-                'tmp_name' => '/tmp/phpN3FmFr',
+                'tmp_name' => $this->tmpFile,
                 'error' => UPLOAD_ERR_OK,
                 'size' => 1024,
             ],
             'file_2' => [
                 'name' => 'image.png',
                 'type' => 'image/png',
-                'tmp_name' => '/tmp/phpLs7DaJ',
+                'tmp_name' => $this->tmpFile,
                 'error' => UPLOAD_ERR_OK,
                 'size' => 98760,
             ],
@@ -290,14 +290,14 @@ class UploadedFileCreatorTest extends TestCase
             'file_1' => [
                 'name' => ['file.txt', 'image.png'],
                 'type' => ['text/plain', 'image/png'],
-                'tmp_name' => ['/tmp/phpN3FmFr', '/tmp/phpLs7DaJ'],
+                'tmp_name' => [$this->tmpFile, $this->tmpFile],
                 'error' => [UPLOAD_ERR_OK, UPLOAD_ERR_OK],
                 'size' => [1024, 98760],
             ],
             'file_2' => [
                 'name' => ['audio.mp3', 'video.mp4'],
                 'type' => ['audio/x-mpeg-3', 'video/mp4'],
-                'tmp_name' => ['/tmp/phpG7kMhl', '/tmp/phpUj4k9J'],
+                'tmp_name' => [$this->tmpFile, $this->tmpFile],
                 'error' => [UPLOAD_ERR_OK, UPLOAD_ERR_OK],
                 'size' => [10245678, 98766432],
             ],
