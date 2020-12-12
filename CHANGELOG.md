@@ -1,5 +1,28 @@
 # HTTP Server Request Change Log
 
+## 1.0.4 - 2020.12.12
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Updates development dependencies.
+- Updates GitHub actions.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 1.0.3 - 2020.09.06
 
 ### Added
