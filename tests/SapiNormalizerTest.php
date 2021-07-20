@@ -28,12 +28,16 @@ class SapiNormalizerTest extends TestCase
             'SERVER_PORT' => '443',
             'REQUEST_METHOD' => 'GET',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
+            'SERVER_NAME' => 'example.org',
             'HTTP_HOST' => 'example.com',
             'HTTP_CACHE_CONTROL' => 'max-age=0',
             'HTTP_X_FORWARDED_PROTO' => 'https',
             'CONTENT_TYPE' => 'text/html; charset=UTF-8',
             'REQUEST_URI' => '/path?name=value',
             'QUERY_STRING' => 'name=value',
+            'REDIRECT_STATUS' => '200',
+            'REDIRECT_HTTP_HOST' => 'example.org',
+            'REDIRECT_HTTP_CONNECTION' => 'keep-alive',
         ];
     }
 
@@ -97,6 +101,19 @@ class SapiNormalizerTest extends TestCase
         $this->assertSame('/path', $uri->getPath());
         $this->assertSame($this->server['QUERY_STRING'], $uri->getQuery());
         $this->assertSame('https://example.com/path?name=value', (string) $uri);
+
+        unset($this->server['HTTPS'], $this->server['HTTP_HOST']);
+
+        $uri = $this->normalizer->normalizeUri($this->server);
+        $this->assertInstanceOf(UriInterface::class, $uri);
+        $this->assertSame($this->server['HTTP_X_FORWARDED_PROTO'], $uri->getScheme());
+        $this->assertSame($this->server['SERVER_NAME'], $uri->getAuthority());
+        $this->assertSame('', $uri->getUserInfo());
+        $this->assertSame($this->server['SERVER_NAME'], $uri->getHost());
+        $this->assertSame(null, $uri->getPort());
+        $this->assertSame('/path', $uri->getPath());
+        $this->assertSame($this->server['QUERY_STRING'], $uri->getQuery());
+        $this->assertSame('https://example.org/path?name=value', (string) $uri);
     }
 
     public function testNormalizeUriIfServerIsEmpty(): void
@@ -117,17 +134,13 @@ class SapiNormalizerTest extends TestCase
     {
         $headers = $this->normalizer->normalizeHeaders($this->server);
 
-        $this->assertSame($this->server['HTTP_HOST'], $headers['Host']);
-        $this->assertSame($this->server['HTTP_CACHE_CONTROL'], $headers['Cache-Control']);
-        $this->assertSame($this->server['HTTP_X_FORWARDED_PROTO'], $headers['X-Forwarded-Proto']);
-        $this->assertSame($this->server['CONTENT_TYPE'], $headers['Content-Type']);
-
-        $this->assertFalse(isset($headers['HTTPS']));
-        $this->assertFalse(isset($headers['SERVER_PORT']));
-        $this->assertFalse(isset($headers['REQUEST_METHOD']));
-        $this->assertFalse(isset($headers['SERVER_PROTOCOL']));
-        $this->assertFalse(isset($headers['REQUEST_URI']));
-        $this->assertFalse(isset($headers['QUERY_STRING']));
+        $this->assertSame($headers, [
+            'Host' => 'example.com',
+            'Cache-Control' => 'max-age=0',
+            'X-Forwarded-Proto' => 'https',
+            'Content-Type' => 'text/html; charset=UTF-8',
+            'Connection' => 'keep-alive',
+        ]);
     }
 
     public function testNormalizeHeadersIfServerIsEmpty(): void

@@ -138,6 +138,7 @@ class PhpInputStreamTest extends TestCase
 
         $stream = new PhpInputStream('data://,123');
         $this->assertSame('123', $stream->getContents());
+        $this->assertSame('123', $stream->getContents());
 
         $stream = new PhpInputStream('data://,123');
         $stream->read(1);
