@@ -97,6 +97,13 @@ class UploadedFileCreatorTest extends TestCase
         ]);
     }
 
+    public function testCreateFromGlobalsWithUploadedFileInstance(): void
+    {
+        $files = ['file' => UploadedFileCreator::create($this->tmpFile, 1024, UPLOAD_ERR_OK)];
+        $this->assertSame($files, UploadedFileCreator::createFromGlobals($files));
+    }
+
+
     public function testCreateFromGlobalsOneFile(): void
     {
         $files = [
@@ -117,6 +124,30 @@ class UploadedFileCreatorTest extends TestCase
         $this->assertSame($files['file']['tmp_name'], $uploadedFiles['file']->getStream()->getMetadata('uri'));
         $this->assertSame($files['file']['error'], $uploadedFiles['file']->getError());
         $this->assertSame($files['file']['size'], $uploadedFiles['file']->getSize());
+    }
+
+    public function testCreateFromGlobalsNestedOneFile(): void
+    {
+        $files = [
+            'file' => [
+                [
+                    'name' => 'file.txt',
+                    'type' => 'text/plain',
+                    'tmp_name' => $this->tmpFile,
+                    'error' => UPLOAD_ERR_OK,
+                    'size' => 1024,
+                ],
+            ],
+        ];
+
+        $uploadedFiles = UploadedFileCreator::createFromGlobals($files);
+
+        $this->assertInstanceOf(UploadedFileInterface::class, $uploadedFiles['file'][0]);
+        $this->assertSame($files['file'][0]['name'], $uploadedFiles['file'][0]->getClientFilename());
+        $this->assertSame($files['file'][0]['type'], $uploadedFiles['file'][0]->getClientMediaType());
+        $this->assertSame($files['file'][0]['tmp_name'], $uploadedFiles['file'][0]->getStream()->getMetadata('uri'));
+        $this->assertSame($files['file'][0]['error'], $uploadedFiles['file'][0]->getError());
+        $this->assertSame($files['file'][0]['size'], $uploadedFiles['file'][0]->getSize());
     }
 
     public function testCreateFromGlobalsLinearMultipleNotStructuredFiles(): void
@@ -389,6 +420,28 @@ class UploadedFileCreatorTest extends TestCase
                     ],
                 ],
             ],
+            'multidimensional-not-passed-tmp_name' => [
+                [
+                    'file' => [
+                        'name' => [
+                            'file_1' => 'file.txt',
+                            'file_2' => 'image.png',
+                        ],
+                        'type' => [
+                            'file_1' => 'text/plain',
+                            'file_2' => 'image/png',
+                        ],
+                        'error' => [
+                            'file_1' => UPLOAD_ERR_OK,
+                            'file_2' => UPLOAD_ERR_OK,
+                        ],
+                        'size' => [
+                            'file_1' => 1024,
+                            'file_2' => 98174,
+                        ],
+                    ],
+                ],
+            ],
             'not-passed-error' => [
                 [
                     'file' => [
@@ -399,6 +452,28 @@ class UploadedFileCreatorTest extends TestCase
                     ],
                 ],
             ],
+            'multidimensional-not-passed-error' => [
+                [
+                    'file' => [
+                        'name' => [
+                            'file_1' => 'file.txt',
+                            'file_2' => 'image.png',
+                        ],
+                        'type' => [
+                            'file_1' => 'text/plain',
+                            'file_2' => 'image/png',
+                        ],
+                        'tmp_name' => [
+                            'file_1' => '/tmp/phpN3FmFr',
+                            'file_2' => '/tmp/phpLs7DaJ',
+                        ],
+                        'size' => [
+                            'file_1' => 1024,
+                            'file_2' => 98174,
+                        ],
+                    ],
+                ],
+            ],
             'not-passed-size' => [
                 [
                     'file' => [
@@ -406,6 +481,28 @@ class UploadedFileCreatorTest extends TestCase
                         'type' => 'text/plain',
                         'tmp_name' => '/tmp/phpN3FmFr',
                         'error' => UPLOAD_ERR_OK,
+                    ],
+                ],
+            ],
+            'multidimensional-not-passed-size' => [
+                [
+                    'file' => [
+                        'name' => [
+                            'file_1' => 'file.txt',
+                            'file_2' => 'image.png',
+                        ],
+                        'type' => [
+                            'file_1' => 'text/plain',
+                            'file_2' => 'image/png',
+                        ],
+                        'tmp_name' => [
+                            'file_1' => '/tmp/phpN3FmFr',
+                            'file_2' => '/tmp/phpLs7DaJ',
+                        ],
+                        'error' => [
+                            'file_1' => UPLOAD_ERR_OK,
+                            'file_2' => UPLOAD_ERR_OK,
+                        ],
                     ],
                 ],
             ],
