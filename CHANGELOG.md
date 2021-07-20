@@ -1,5 +1,28 @@
 # HTTP Server Request Change Log
 
+## 1.0.5 - 2021.07.20
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [Fixes](https://github.com/httpsoft/http-server-request/commit/6552246f34d767a33bb23b4348b8560d41e15136) `HttpSoft\ServerRequest\SapiNormalizer::normalizeHeaders()` method.
+- [#1](https://github.com/httpsoft/http-server-request/pull/1) adds test cases for code coverage and updates of workflow actions.
+
 ## 1.0.4 - 2020.12.12
 
 ### Added
