@@ -24,6 +24,7 @@ class SapiNormalizerTest extends TestCase
     {
         $this->normalizer = new SapiNormalizer();
         $this->server = [
+            'value-without-name',
             'HTTPS' => 'on',
             'SERVER_PORT' => '443',
             'REQUEST_METHOD' => 'GET',

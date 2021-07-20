@@ -90,7 +90,7 @@ final class SapiNormalizer implements ServerNormalizerInterface
         $headers = [];
 
         foreach ($server as $name => $value) {
-            if (!is_string($name) ||  $value === '') {
+            if (!is_string($name)) {
                 continue;
             }
 
@@ -102,6 +102,7 @@ final class SapiNormalizer implements ServerNormalizerInterface
 
             if (strpos($name, 'HTTP_') === 0) {
                 $headers[$this->normalizeHeaderName(substr($name, 5))] = $value;
+                continue;
             }
 
             if (strpos($name, 'CONTENT_') === 0) {
