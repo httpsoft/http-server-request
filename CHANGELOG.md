@@ -1,5 +1,11 @@
 # HTTP Server Request Change Log
 
+## 1.0.6 - 2023.05.05
+
+### Fixed
+
+- [#4](https://github.com/httpsoft/http-server-request/pull/4) Fixes parsing host from `HTTP_HOST` header to `HttpSoft\ServerRequest\SapiNormalizer`.
+
 ## 1.0.5 - 2021.07.20
 
 ### Added
