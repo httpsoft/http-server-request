@@ -11,6 +11,7 @@ use function array_key_exists;
 use function explode;
 use function in_array;
 use function is_string;
+use function preg_match;
 use function preg_replace;
 use function strpos;
 use function str_replace;
@@ -59,14 +60,16 @@ final class SapiNormalizer implements ServerNormalizerInterface
             $uri = $uri->withScheme((string) $scheme);
         }
 
-        if ($host = $server['HTTP_X_FORWARDED_HOST'] ?? $server['HTTP_HOST'] ?? '') {
-            $uri = $uri->withHost((string) $host);
-        } elseif ($host = $server['SERVER_NAME'] ?? $server['SERVER_ADDR'] ?? '') {
-            $uri = $uri->withHost((string) $host);
-        }
-
         if (isset($server['SERVER_PORT'])) {
             $uri = $uri->withPort((int) $server['SERVER_PORT']);
+        }
+
+        if ($host = $server['HTTP_X_FORWARDED_HOST'] ?? $server['HTTP_HOST'] ?? '') {
+            $uri = preg_match('/^(.+):(\d+)$/', (string) $host, $matches) === 1
+                ? $uri->withHost($matches[1])->withPort((int) $matches[2])
+                : $uri->withHost($server['HTTP_HOST']);
+        } elseif ($host = $server['SERVER_NAME'] ?? $server['SERVER_ADDR'] ?? '') {
+            $uri = $uri->withHost((string) $host);
         }
 
         if ($path = $server['REQUEST_URI'] ?? $server['ORIG_PATH_INFO'] ?? '') {

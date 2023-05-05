@@ -98,7 +98,7 @@ class SapiNormalizerTest extends TestCase
         $this->assertSame($this->server['HTTP_HOST'], $uri->getAuthority());
         $this->assertSame('', $uri->getUserInfo());
         $this->assertSame($this->server['HTTP_HOST'], $uri->getHost());
-        $this->assertSame(null, $uri->getPort());
+        $this->assertNull($uri->getPort());
         $this->assertSame('/path', $uri->getPath());
         $this->assertSame($this->server['QUERY_STRING'], $uri->getQuery());
         $this->assertSame('https://example.com/path?name=value', (string) $uri);
@@ -111,21 +111,74 @@ class SapiNormalizerTest extends TestCase
         $this->assertSame($this->server['SERVER_NAME'], $uri->getAuthority());
         $this->assertSame('', $uri->getUserInfo());
         $this->assertSame($this->server['SERVER_NAME'], $uri->getHost());
-        $this->assertSame(null, $uri->getPort());
+        $this->assertNull($uri->getPort());
         $this->assertSame('/path', $uri->getPath());
         $this->assertSame($this->server['QUERY_STRING'], $uri->getQuery());
         $this->assertSame('https://example.org/path?name=value', (string) $uri);
     }
 
+    public function testNormalizeUriIfHttpHostHeaderWithStandardPort(): void
+    {
+        $uri = $this->normalizer->normalizeUri([
+            'SERVER_PORT' => '443',
+            'REQUEST_SCHEME' => 'https',
+            'HTTP_HOST' => 'example.com:443',
+        ]);
+
+        $this->assertSame('https', $uri->getScheme());
+        $this->assertSame('example.com', $uri->getAuthority());
+        $this->assertSame('', $uri->getUserInfo());
+        $this->assertSame('example.com', $uri->getHost());
+        $this->assertNull($uri->getPort());
+        $this->assertSame('', $uri->getPath());
+        $this->assertSame('', $uri->getQuery());
+        $this->assertSame('https://example.com', (string) $uri);
+    }
+
+    public function testNormalizeUriIfHttpHostHeaderWithNotStandardPort(): void
+    {
+        $uri = $this->normalizer->normalizeUri([
+            'SERVER_PORT' => '443',
+            'REQUEST_SCHEME' => 'https',
+            'HTTP_HOST' => 'example.com:8080',
+        ]);
+
+        $this->assertSame('https', $uri->getScheme());
+        $this->assertSame('example.com:8080', $uri->getAuthority());
+        $this->assertSame('', $uri->getUserInfo());
+        $this->assertSame('example.com', $uri->getHost());
+        $this->assertSame(8080, $uri->getPort());
+        $this->assertSame('', $uri->getPath());
+        $this->assertSame('', $uri->getQuery());
+        $this->assertSame('https://example.com:8080', (string) $uri);
+    }
+
+    public function testNormalizeUriIfHttpHostHeaderWithNotEqualStandardPortWithScheme(): void
+    {
+        $uri = $this->normalizer->normalizeUri([
+            'SERVER_PORT' => '443',
+            'REQUEST_SCHEME' => 'https',
+            'HTTP_HOST' => 'example.com:80',
+        ]);
+
+        $this->assertSame('https', $uri->getScheme());
+        $this->assertSame('example.com:80', $uri->getAuthority());
+        $this->assertSame('', $uri->getUserInfo());
+        $this->assertSame('example.com', $uri->getHost());
+        $this->assertSame(80, $uri->getPort());
+        $this->assertSame('', $uri->getPath());
+        $this->assertSame('', $uri->getQuery());
+        $this->assertSame('https://example.com:80', (string) $uri);
+    }
+
     public function testNormalizeUriIfServerIsEmpty(): void
     {
         $uri = $this->normalizer->normalizeUri([]);
-        $this->assertInstanceOf(UriInterface::class, $uri);
         $this->assertSame('', $uri->getScheme());
         $this->assertSame('', $uri->getAuthority());
         $this->assertSame('', $uri->getUserInfo());
         $this->assertSame('', $uri->getHost());
-        $this->assertSame(null, $uri->getPort());
+        $this->assertNull($uri->getPort());
         $this->assertSame('', $uri->getPath());
         $this->assertSame('', $uri->getQuery());
         $this->assertSame('', (string) $uri);
