@@ -67,7 +67,7 @@ final class SapiNormalizer implements ServerNormalizerInterface
         if ($host = $server['HTTP_X_FORWARDED_HOST'] ?? $server['HTTP_HOST'] ?? '') {
             $uri = preg_match('/^(.+):(\d+)$/', (string) $host, $matches) === 1
                 ? $uri->withHost($matches[1])->withPort((int) $matches[2])
-                : $uri->withHost($server['HTTP_HOST']);
+                : $uri->withHost((string) $host);
         } elseif ($host = $server['SERVER_NAME'] ?? $server['SERVER_ADDR'] ?? '') {
             $uri = $uri->withHost((string) $host);
         }
