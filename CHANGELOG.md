@@ -1,5 +1,11 @@
 # HTTP Server Request Change Log
 
+## 1.1.0 - 2023.05.05
+
+### Changed
+
+- [#5](https://github.com/httpsoft/http-server-request/pull/5) Rises `httpsoft/http-message` package version to `^1.1`.
+
 ## 1.0.6 - 2023.05.05
 
 ### Fixed
