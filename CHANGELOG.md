@@ -1,5 +1,11 @@
 # HTTP Server Request Change Log
 
+## 1.1.1 - 2024.11.25
+
+### Fixed
+
+- [#6](https://github.com/httpsoft/http-server-request/pull/6) Fixes deprecation notices for PHP 8.4.
+
 ## 1.1.0 - 2023.05.05
 
 ### Changed
