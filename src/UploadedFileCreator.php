@@ -28,8 +28,8 @@ final class UploadedFileCreator
         $streamOrFile,
         int $size,
         int $error,
-        string $clientFilename = null,
-        string $clientMediaType = null
+        ?string $clientFilename = null,
+        ?string $clientMediaType = null
     ): UploadedFileInterface {
         return new UploadedFile($streamOrFile, $size, $error, $clientFilename, $clientMediaType);
     }
