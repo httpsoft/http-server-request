@@ -13,7 +13,7 @@ final class ServerRequestCreator
      * @param ServerNormalizerInterface|null $normalizer
      * @return ServerRequestInterface
      */
-    public static function create(ServerNormalizerInterface $normalizer = null): ServerRequestInterface
+    public static function create(?ServerNormalizerInterface $normalizer = null): ServerRequestInterface
     {
         return self::createFromGlobals(null, null, null, null, null, $normalizer);
     }
@@ -28,12 +28,12 @@ final class ServerRequestCreator
      * @return ServerRequestInterface
      */
     public static function createFromGlobals(
-        array $server = null,
-        array $files = null,
-        array $cookie = null,
-        array $get = null,
-        array $post = null,
-        ServerNormalizerInterface $normalizer = null
+        ?array $server = null,
+        ?array $files = null,
+        ?array $cookie = null,
+        ?array $get = null,
+        ?array $post = null,
+        ?ServerNormalizerInterface $normalizer = null
     ): ServerRequestInterface {
         $server ??= $_SERVER;
         $normalizer ??= new SapiNormalizer();
