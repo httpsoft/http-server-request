@@ -48,7 +48,7 @@ final class SapiNormalizer implements ServerNormalizerInterface
     /**
      * {@inheritDoc}
      *
-     * @psalm-suppress MixedAssignment
+     * @psalm-suppress MixedAssignment, RiskyTruthyFalsyComparison
      */
     public function normalizeUri(array $server): UriInterface
     {
